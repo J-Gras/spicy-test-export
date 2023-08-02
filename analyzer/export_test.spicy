@@ -1,0 +1,26 @@
+module Export_Test;
+
+import spicy;
+
+public type A = unit {
+#	var start: iterator<stream> &optional;
+#	on %init() { self.start = self.input(); }
+#
+#	payload: bytes &eod { self.set_input(self.start); unset self.start; }
+
+	: b"\xFF";
+	b1: bitfield(8) {
+		b1_1: 0..3;
+		b1_2: 4..7;
+	};
+	b2: B;
+	b3: uint8;
+	b4: bytes &eod;
+};
+
+type B = unit {
+	data: bitfield(8) {
+		b2_1: 0..3;
+		b2_2: 4..7;
+	};
+} &convert=self.data;

@@ -1,0 +1,14 @@
+module Zeek_Export_Test;
+
+import Export_Test;
+import zeek;
+
+# Confirm once an APDU was successfully parsed.
+on Export_Test::A::%done {
+	zeek::confirm_protocol();
+}
+
+# Any error bubbling up to the top unit will trigger a protocol rejection.
+on Export_Test::A::%error {
+	zeek::reject_protocol("error while parsing Export_Test");
+}

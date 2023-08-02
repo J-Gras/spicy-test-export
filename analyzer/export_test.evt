@@ -1,0 +1,11 @@
+import Export_Test;
+import Zeek_Export_Test;
+
+protocol analyzer Export_Test over TCP:
+    parse originator with Export_Test::A,
+    parse responder with Export_Test::A,
+    port 2323/tcp;
+
+export Export_Test::A;
+
+on Export_Test::A -> event Export_Test::seen_a($conn, $is_orig, self);
